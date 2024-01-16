@@ -15,4 +15,4 @@ use App\Http\Controllers\TemperaturaActualController;
 |
 */
 
-Route::GET('temperatura-actual', [TemperaturaActualController::class, 'obtenerTemperaturas']);
+//Route::GET('temperatura-actual', [TemperaturaActualController::class, 'obtenerTemperaturas']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TemperaturaActual;
 use Illuminate\Http\Request;
+use Config; 
 
 class TemperaturaActualController extends Controller
 {
@@ -21,7 +22,7 @@ class TemperaturaActualController extends Controller
         // ]);
         $ubicaciones = TemperaturaActual::All("nombre", "latitud", "longitud");
         foreach ($ubicaciones as $ubicacion) {
-            $json = @file_get_contents('https://api.openweathermap.org/data/2.5/onecall?lat='.$ubicacion->latitud.'&lon='.$ubicacion->longitud.'&units=metric&appid=ee7c4b79648c7ec65f4c16b0b11a0ffe');
+            $json = @file_get_contents('https://api.openweathermap.org/data/2.5/onecall?lat='.$ubicacion->latitud.'&lon='.$ubicacion->longitud.'&units=metric&appid='.config('api_tokens.token_openweathermap'));
             if (!$json) {
                 return response()->json(['message'=>'error', 'codigo' => '500'], 500)->header('code', '500');
             }else{
@@ -41,6 +42,18 @@ class TemperaturaActualController extends Controller
 
     public function falsearTemperaturas()
     {
-        //
+        $ubicaciones = TemperaturaActual::All("nombre", "temperatura", "temperatura_real");
+        foreach ($ubicaciones as $ubicacion) {
+                $ubiActualizada = TemperaturaActual::find($ubicacion->nombre);
+                if($ubicacion->temperatura + 0.2 >= $ubicacion->temperatura_real + 1){
+                $ubiActualizada->update([
+                    'temperatura' => $ubicacion->temperatura_real - 0.8
+                ]);
+                }else{
+                    $ubiActualizada->update([
+                        'temperatura' => $ubicacion->temperatura + 0.2
+                    ]); 
+                }
+        }
     }
 }

@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->call('App\Http\Controllers\TemperaturaActualController@falsearTemperaturas')->everyFifteenSeconds();
         $schedule->call('App\Http\Controllers\TemperaturaActualController@obtenerTemperaturas')->everyFiveMinutes();
     }
 
