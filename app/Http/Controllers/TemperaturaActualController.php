@@ -47,7 +47,7 @@ class TemperaturaActualController extends Controller
                 $ubiActualizada = TemperaturaActual::find($ubicacion->nombre);
                 if($ubicacion->temperatura + 0.2 >= $ubicacion->temperatura_real + 1){
                 $ubiActualizada->update([
-                    'temperatura' => $ubicacion->temperatura_real - 0.8
+                    'temperatura' => $ubicacion->temperatura_real - 0.9
                 ]);
                 }else{
                     $ubiActualizada->update([
