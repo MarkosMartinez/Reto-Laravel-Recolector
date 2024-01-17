@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TemperaturaActual;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\LOG;
 use Config; 
 
 class TemperaturaActualController extends Controller

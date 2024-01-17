@@ -11,6 +11,7 @@ class TemperaturaActual extends Model
 
     protected $table = 'temperaturas_actuales';
     protected $primaryKey = 'nombre';
+    protected $keyType = 'string';
     const UPDATED_AT = 'ultima_actualizacion';
 
     /**
