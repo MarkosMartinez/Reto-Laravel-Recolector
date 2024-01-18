@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('temperaturas_actuales', function (Blueprint $table) {
-            $table->string('nombre')->primary();
+        Schema::create('temperaturas_anteriores', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
             $table->decimal('temperatura', 5, 2);
-            $table->decimal('temperatura_real', 5, 2);
             $table->integer('humedad')->nullable();
             $table->string('tiempo')->nullable();
             $table->decimal('viento')->nullable();
-            $table->float('latitud', 8, 6);
-            $table->float('longitud', 9, 6);
-            $table->timestamp('ultima_actualizacion')->useCurrent();
+            $table->dateTime('fecha');
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('temperaturas_actuales');
+        Schema::dropIfExists('temperaturas_anteriores');
     }
 };
