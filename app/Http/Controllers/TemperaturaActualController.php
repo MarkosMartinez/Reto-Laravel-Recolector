@@ -35,7 +35,7 @@ class TemperaturaActualController extends Controller
                     'temperatura_real' => $data["current"]["temp"],
                     'humedad' => $data["current"]["humidity"],
                     'viento' => $data["current"]["wind_speed"],
-                    'tiempo' => $data["current"]["weather"][0]["id"],
+                    'tiempo' => $data["current"]["weather"][0]["main"],
                 ]);
             }
         }
