@@ -15,9 +15,10 @@ return new class extends Migration
             $table->string('nombre')->primary();
             $table->decimal('temperatura', 5, 2);
             $table->decimal('temperatura_real', 5, 2);
-            $table->integer('humedad')->nullable();
+            $table->decimal('sensacion_termica', 5, 2);
+            $table->integer('humedad');
             $table->string('tiempo')->nullable();
-            $table->decimal('viento')->nullable();
+            $table->decimal('viento');
             $table->float('latitud', 8, 6);
             $table->float('longitud', 9, 6);
             $table->timestamp('ultima_actualizacion')->useCurrent();
