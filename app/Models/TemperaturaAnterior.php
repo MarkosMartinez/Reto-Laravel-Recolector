@@ -12,6 +12,7 @@ class TemperaturaAnterior extends Model
     protected $primaryKey = ['nombre', 'fecha'];
     public $incrementing = false;
     protected $keyType = 'string';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
