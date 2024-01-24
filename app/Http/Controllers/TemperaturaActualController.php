@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\TemperaturaActual;
+use App\Models\TemperaturaAnterior;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\LOG;
+use Carbon\Carbon;
 use Config; 
 
 class TemperaturaActualController extends Controller
@@ -17,8 +19,14 @@ class TemperaturaActualController extends Controller
             if (!$json) {
                 return response()->json(['message'=>'error', 'codigo' => '500'], 500)->header('code', '500');
             }else{
-                //return json_decode($json);
                 $data = json_decode($json, true);
+                
+                TemperaturaAnterior::create([
+                    'nombre' => $ubicacion->nombre,
+                    'temperatura' => $data["current"]["temp"],
+                    'fecha' => now(),
+                ]);
+
                 $ubiActualizada = TemperaturaActual::find($ubicacion->nombre);
                 $ubiActualizada->update([
                     'temperatura' => $data["current"]["temp"],
@@ -34,8 +42,14 @@ class TemperaturaActualController extends Controller
 
     public function falsearTemperaturas()
     {
-        $ubicaciones = TemperaturaActual::All("nombre", "temperatura", "temperatura_real");
-        foreach ($ubicaciones as $ubicacion) {
+        $tiempoActual = Carbon::now();
+
+        $ubicaciones = TemperaturaActual::All("nombre", "temperatura", "temperatura_real", "ultima_actualizacion");
+        $diferenciaTiempo = $tiempoActual->diffInMinutes($ubicaciones[0]->ultima_actualizacion);
+        if ($diferenciaTiempo > 15) {
+            $this->obtenerTemperaturas();
+        } else {
+            foreach ($ubicaciones as $ubicacion) {
                 $ubiActualizada = TemperaturaActual::find($ubicacion->nombre);
                 if($ubicacion->temperatura + 0.2 >= $ubicacion->temperatura_real + 1){
                 $ubiActualizada->update([
@@ -46,6 +60,7 @@ class TemperaturaActualController extends Controller
                         'temperatura' => $ubicacion->temperatura + 0.2
                     ]); 
                 }
+            }   
         }
     }
 }
