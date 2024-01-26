@@ -27,6 +27,7 @@ class TemperaturaActual extends Model
         'humedad',
         'tiempo',
         'viento',
+        'presion',
         'latitud',
         'longitud',
     ];

@@ -34,6 +34,7 @@ class TemperaturaActualController extends Controller
                     'sensacion_termica' => $data["current"]["feels_like"],
                     'humedad' => $data["current"]["humidity"],
                     'viento' => $data["current"]["wind_speed"],
+                    'presion' => $data["current"]["pressure"],
                     'tiempo' => $data["current"]["weather"][0]["main"],
                 ]);
             }

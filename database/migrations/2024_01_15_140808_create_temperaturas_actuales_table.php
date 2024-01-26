@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('humedad');
             $table->string('tiempo')->nullable();
             $table->decimal('viento');
+            $table->decimal('presion');
             $table->float('latitud', 8, 6);
             $table->float('longitud', 9, 6);
             $table->timestamp('ultima_actualizacion')->useCurrent();
